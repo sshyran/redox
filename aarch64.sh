@@ -2,10 +2,13 @@
 
 set -ex
 
-rm -f build/libkernel.a build/kernel
+# rm -f build/libkernel.a build/kernel
+rm -f build/kernel
+touch build/bootloader
 touch kernel
 touch kernel/src/arch/aarch64/init/pre_kstart/early_init.S
 make build/kernel
+make build/initfs.tag
 
 mkimage \
 	-A arm64 \
@@ -25,4 +28,5 @@ qemu-system-aarch64 \
 	-device loader,file=build/kernel.uimage,addr=0x41000000,force-raw=on \
 	-serial mon:stdio \
 	-nographic \
+  -S \
 	-s

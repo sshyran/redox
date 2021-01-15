@@ -8,13 +8,13 @@ prompt = false
 # Package settings
 [packages]
 #drivers = {}
-#init = {}
-#nulld = {}
-pciids = {}
-#ramfs = {}
-#randd = {}
+init = {}
+nulld = {}
+#pciids = {}
+ramfs = {}
+randd = {}
 #redoxfs = {}
-#zerod = {}
+zerod = {}
 
 [[files]]
 path="/etc/init.rc"

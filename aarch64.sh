@@ -29,5 +29,5 @@ qemu-system-aarch64 \
 	-device loader,file=build/kernel.uimage,addr=0x41000000,force-raw=on \
 	-serial mon:stdio \
 	-nographic \
-  -S \
-	-s
+	-s \
+	"$@"

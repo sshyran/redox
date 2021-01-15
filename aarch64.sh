@@ -2,6 +2,7 @@
 
 set -ex
 
+mkdir -p build
 # rm -f build/libkernel.a build/kernel
 rm -f build/kernel
 touch build/bootloader

@@ -38,3 +38,7 @@
 	path = bootloader-coreboot
 	url = https://gitlab.redox-os.org/redox-os/bootloader-coreboot.git
 	branch = master
+[submodule "u-boot"]
+	path = u-boot
+	url = https://github.com/qemu/u-boot.git
+	branch = master

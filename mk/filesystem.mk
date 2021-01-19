@@ -10,11 +10,11 @@ build/filesystem.bin: filesystem.toml build/bootloader build/kernel prefix
 	redoxfs/target/release/redoxfs $@.partial build/filesystem/
 	sleep 2
 	pgrep redoxfs
-	cp $< build/filesystem/filesystem.toml
-	cp build/bootloader build/filesystem/bootloader
-	cp build/kernel build/filesystem/kernel
-	cp -r $(ROOT)/$(PREFIX_INSTALL)/$(TARGET)/include build/filesystem/include
-	cp -r $(ROOT)/$(PREFIX_INSTALL)/$(TARGET)/lib build/filesystem/lib
+	# TODO aarch64: cp $< build/filesystem/filesystem.toml
+	# TODO aarch64: cp build/bootloader build/filesystem/bootloader
+	# TODO aarch64: cp build/kernel build/filesystem/kernel
+	# TODO aarch64: cp -r $(ROOT)/$(PREFIX_INSTALL)/$(TARGET)/include build/filesystem/include
+	# TODO aarch64: cp -r $(ROOT)/$(PREFIX_INSTALL)/$(TARGET)/lib build/filesystem/lib
 	$(INSTALLER) -c $< build/filesystem/
 	sync
 	-$(FUMOUNT) build/filesystem/ || true

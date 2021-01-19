@@ -11,7 +11,7 @@ case "${MACHINE}" in
 		U_BOOT_CONFIG=rpi_3_defconfig
 		LOAD_ADDR=0x00000000
 		ENTRY_ADDR=0x00001000
-		IMAGE_ADDR=0x01000000
+		IMAGE_ADDR=0x04000000
 		QEMU_ARGS=(
 			-M raspi3
 			-device "loader,file=${IMAGE},addr=${IMAGE_ADDR},force-raw=on"
@@ -26,9 +26,10 @@ case "${MACHINE}" in
 		U_BOOT_CONFIG=qemu_arm64_defconfig
 		LOAD_ADDR=0x40000000
 		ENTRY_ADDR=0x40001000
-		IMAGE_ADDR=0x41000000
+		IMAGE_ADDR=0x44000000
 		QEMU_ARGS=(
 			-M virt
+			-m 1G
 			-cpu cortex-a57
 			-bios "${U_BOOT}"
 			-device "loader,file=${IMAGE},addr=${IMAGE_ADDR},force-raw=on"
@@ -82,4 +83,3 @@ mkimage \
    	"${IMAGE}"
 
 qemu-system-aarch64 "${QEMU_ARGS[@]}" "$@"
-

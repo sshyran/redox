@@ -66,6 +66,7 @@ touch kernel
 touch kernel/src/arch/aarch64/init/pre_kstart/early_init.S
 make build/kernel
 make build/initfs.tag
+make build/filesystem.bin
 
 mkimage \
 	-A arm64 \

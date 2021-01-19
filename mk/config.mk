@@ -8,7 +8,7 @@ INSTALLER_FLAGS?=--cookbook=cookbook
 ## Enabled to use binary prefix (much faster)
 PREFIX_BINARY?=1
 ## Filesystem size in MB (256 is the default)
-FILESYSTEM_SIZE?=256
+FILESYSTEM_SIZE?=48
 
 # Per host variables
 UNAME := $(shell uname)

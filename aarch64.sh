@@ -5,6 +5,7 @@ set -ex
 MACHINE=virt
 
 U_BOOT="build/u-boot/${MACHINE}.bin"
+IMAGE="build/kernel_live.uimage"
 case "${MACHINE}" in
 	raspi3)
 		U_BOOT_CONFIG=rpi_3_defconfig
@@ -13,7 +14,7 @@ case "${MACHINE}" in
 		IMAGE_ADDR=0x01000000
 		QEMU_ARGS=(
 			-M raspi3
-			-device "loader,file=build/kernel.uimage,addr=${IMAGE_ADDR},force-raw=on"
+			-device "loader,file=${IMAGE},addr=${IMAGE_ADDR},force-raw=on"
 			-kernel "${U_BOOT}"
 			-nographic
 			-serial null
@@ -30,7 +31,7 @@ case "${MACHINE}" in
 			-M virt
 			-cpu cortex-a57
 			-bios "${U_BOOT}"
-			-device "loader,file=build/kernel.uimage,addr=${IMAGE_ADDR},force-raw=on"
+			-device "loader,file=${IMAGE},addr=${IMAGE_ADDR},force-raw=on"
 			-nographic
 			-serial mon:stdio
 			-s
@@ -67,6 +68,7 @@ touch kernel/src/arch/aarch64/init/pre_kstart/early_init.S
 make build/kernel
 make build/initfs.tag
 make build/filesystem.bin
+make build/kernel_live
 
 mkimage \
 	-A arm64 \
@@ -76,8 +78,8 @@ mkimage \
 	-a "${LOAD_ADDR}" \
 	-e "${ENTRY_ADDR}" \
 	-n "Redox kernel (qemu AArch64 ${MACHINE})" \
-	-d build/kernel \
-   	build/kernel.uimage
+	-d build/kernel_live \
+   	"${IMAGE}"
 
 qemu-system-aarch64 "${QEMU_ARGS[@]}" "$@"
 

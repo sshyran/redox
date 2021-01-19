@@ -34,10 +34,20 @@ build/kernel_live: kernel/linkers/$(ARCH).ld build/libkernel_live.a build/live.o
 	$(OBJCOPY) --only-keep-debug $@ $@.sym && \
 	$(OBJCOPY) --strip-debug $@
 
+#TODO: More general use of $(ARCH)
+ifeq ($(ARCH),aarch64)
 build/live.o: build/filesystem.bin
-	#TODO: More general use of $(ARCH)
+	export PATH="$(PREFIX_PATH):$$PATH" && \
+	$(OBJCOPY) -I binary -O elf64-littleaarch64 -B aarch64 $< $@ \
+		--redefine-sym _binary_build_filesystem_bin_start=__live_start \
+		--redefine-sym _binary_build_filesystem_bin_end=__live_end \
+		--redefine-sym _binary_build_filesystem_bin_size=__live_size
+endif
+ifeq ($(ARCH),x86_64)
+build/live.o: build/filesystem.bin
 	export PATH="$(PREFIX_PATH):$$PATH" && \
 	$(OBJCOPY) -I binary -O elf64-x86-64 -B i386:x86-64 $< $@ \
 		--redefine-sym _binary_build_filesystem_bin_start=__live_start \
 		--redefine-sym _binary_build_filesystem_bin_end=__live_end \
 		--redefine-sym _binary_build_filesystem_bin_size=__live_size
+endif

@@ -9,9 +9,9 @@ IMAGE="build/kernel_live.uimage"
 case "${MACHINE}" in
 	raspi3)
 		U_BOOT_CONFIG=rpi_3_defconfig
-		LOAD_ADDR=0x00000000
-		ENTRY_ADDR=0x00001000
-		IMAGE_ADDR=0x04000000
+		LOAD_ADDR=0x04000000
+		ENTRY_ADDR=0x04001000
+		IMAGE_ADDR=0x08000000
 		QEMU_ARGS=(
 			-M raspi3
 			-device "loader,file=${IMAGE},addr=${IMAGE_ADDR},force-raw=on"
@@ -21,6 +21,14 @@ case "${MACHINE}" in
 			-serial mon:stdio
 			-s
 		)
+		;;
+	raspi4)
+		U_BOOT_CONFIG=rpi_4_defconfig
+		LOAD_ADDR=0x40000000
+		ENTRY_ADDR=0x40001000
+		IMAGE_ADDR=0x44000000
+		# load mmc 0 0x44000000 kernel_live.uimage
+		# bootm 0x44000000 - ${fdtcontroladdr}
 		;;
 	virt)
 		U_BOOT_CONFIG=qemu_arm64_defconfig
@@ -78,7 +86,7 @@ mkimage \
 	-C none \
 	-a "${LOAD_ADDR}" \
 	-e "${ENTRY_ADDR}" \
-	-n "Redox kernel (qemu AArch64 ${MACHINE})" \
+	-n "Redox kernel (aarch64 ${MACHINE})" \
 	-d build/kernel_live \
    	"${IMAGE}"
 

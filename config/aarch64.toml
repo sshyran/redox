@@ -20,10 +20,10 @@ ca-certificates = {}
 #cleye = {}
 #cmatrix = {}
 # contain = {}
-# coreutils = {}
+coreutils = {}
 #cpal = {}
 #curl = {}
-# dash = {}
+dash = {}
 #diffutils = {}
 #dosbox = {}
 # drivers = {}
@@ -32,7 +32,7 @@ ca-certificates = {}
 #eduke32 = {}
 #exampled = {}
 #expat = {}
-# extrautils = {}
+extrautils = {}
 #fd = {}
 #ffmpeg = {}
 # findutils = {}
@@ -158,7 +158,7 @@ redoxfs = {}
 #timidity = {}
 #ttf-hack = {}
 userutils = {}
-# uutils = {}
+uutils = {}
 #vim = {}
 #vttest = {}
 #webrender = {}
@@ -174,17 +174,19 @@ uid = 0
 gid = 0
 name = "root"
 home = "/root"
+shell = "/bin/dash"
 
 [users.user]
 # Password is unset
 password = ""
+shell = "/bin/dash"
 
 [[files]]
 path = "/etc/init.d/00_base"
 data = """
 ipcd
 logd
-ptyd
+# ptyd CRASHES
 # pcid /etc/pcid.d/
 """
 
@@ -207,7 +209,9 @@ data = """
 path = "/etc/init.d/30_console"
 data = """
 # getty display:2
-getty debug: -J
+# getty debug: -J
+dash -c "ptyd"
+getty debug:
 """
 
 [[files]]

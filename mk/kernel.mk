@@ -1,16 +1,18 @@
-build/libkernel.a: kernel/Cargo.lock kernel/Cargo.toml kernel/src/* kernel/src/*/* kernel/src/*/*/* kernel/src/*/*/*/* build/initfs.tag
+KERNEL_SRC=$(shell git -C kernel ls-files | sed 's%^%kernel/%')
+
+build/libkernel.a: $(KERNEL_SRC) build/initfs.tag
 	export PATH="$(PREFIX_PATH):$$PATH" && \
 	export INITFS_FOLDER=$(ROOT)/build/initfs && \
 	cd kernel && \
 	cargo rustc --lib --target=$(ROOT)/kernel/targets/$(KTARGET).json --release -Z build-std=core,alloc -- -C soft-float -C debuginfo=2 -C lto --emit link=../$@
 
-build/libkernel_coreboot.a: kernel/Cargo.toml kernel/src/* kernel/src/*/* kernel/src/*/*/* kernel/src/*/*/*/* build/initfs_coreboot.tag
+build/libkernel_coreboot.a: $(KERNEL_SRC) build/initfs_coreboot.tag
 	export PATH="$(PREFIX_PATH):$$PATH" && \
 	export INITFS_FOLDER=$(ROOT)/build/initfs_coreboot && \
 	cd kernel && \
 	cargo rustc --lib --target=$(ROOT)/kernel/targets/$(KTARGET).json --release --features live -Z build-std=core,alloc -- -C soft-float -C debuginfo=2 -C lto --emit link=../$@
 
-build/libkernel_live.a: kernel/Cargo.toml kernel/src/* kernel/src/*/* kernel/src/*/*/* kernel/src/*/*/*/* build/initfs_live.tag
+build/libkernel_live.a: $(KERNEL_SRC) build/initfs_live.tag
 	export PATH="$(PREFIX_PATH):$$PATH" && \
 	export INITFS_FOLDER=$(ROOT)/build/initfs_live && \
 	cd kernel && \

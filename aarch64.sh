@@ -59,6 +59,10 @@ then
 		's/^CONFIG_BOOTCOMMAND=.*$/CONFIG_BOOTCOMMAND="bootm '"${IMAGE_ADDR}"' - ${fdtcontroladdr}"/' \
 		u-boot/.config
 
+	sed -i \
+		's/^CONFIG_SYS_EXTRA_OPTIONS=""/CONFIG_SYS_EXTRA_OPTIONS="ARMV8_SWITCH_TO_EL1"/' \
+		u-boot/.config
+
 	TARGET=aarch64-unknown-redox
 	env CROSS_COMPILE="${TARGET}-" \
 		PATH="${PWD}/prefix/${TARGET}/relibc-install/bin/:${PATH}" \

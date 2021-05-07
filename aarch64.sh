@@ -8,6 +8,7 @@ U_BOOT="build/u-boot/${MACHINE}.bin"
 IMAGE="build/kernel_live.uimage"
 case "${MACHINE}" in
 	raspi3)
+		# UART at 0x3F201000
 		U_BOOT_CONFIG=rpi_3_defconfig
 		LOAD_ADDR=0x04000000
 		ENTRY_ADDR=0x04001000
@@ -23,6 +24,7 @@ case "${MACHINE}" in
 		)
 		;;
 	raspi4)
+		# UART at 0xFE201000
 		U_BOOT_CONFIG=rpi_4_defconfig
 		LOAD_ADDR=0x40000000
 		ENTRY_ADDR=0x40001000
@@ -31,6 +33,7 @@ case "${MACHINE}" in
 		# bootm 0x44000000 - ${fdtcontroladdr}
 		;;
 	virt)
+		# UART at 0x9000000
 		U_BOOT_CONFIG=qemu_arm64_defconfig
 		LOAD_ADDR=0x40000000
 		ENTRY_ADDR=0x40001000

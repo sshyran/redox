@@ -186,7 +186,7 @@ path = "/etc/init.d/00_base"
 data = """
 ipcd
 logd
-# ptyd CRASHES
+dash -c ptyd # CRASHES without dash?
 # pcid /etc/pcid.d/
 """
 
@@ -209,9 +209,7 @@ data = """
 path = "/etc/init.d/30_console"
 data = """
 # getty display:2
-# getty debug: -J
-dash -c "ptyd"
-getty debug:
+getty debug: -J
 """
 
 [[files]]

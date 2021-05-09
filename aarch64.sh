@@ -18,19 +18,22 @@ case "${MACHINE}" in
 			-device "loader,file=${IMAGE},addr=${IMAGE_ADDR},force-raw=on"
 			-kernel "${U_BOOT}"
 			-nographic
-			-serial null
-			-serial mon:stdio
+			-chardev stdio,id=char0,mux=on
+			-serial chardev:char0
+			-serial chardev:char0
+			-mon chardev=char0
 			-s
 		)
 		;;
 	raspi4)
 		# UART at 0xFE201000
+		# On SD: load mmc 0 0x44000000 kernel_live.uimage
+		# On TFTP: dhcp 0x44000000 kernel_live.uimage
+		# boot
 		U_BOOT_CONFIG=rpi_4_defconfig
 		LOAD_ADDR=0x40000000
 		ENTRY_ADDR=0x40001000
 		IMAGE_ADDR=0x44000000
-		# load mmc 0 0x44000000 kernel_live.uimage
-		# bootm 0x44000000 - ${fdtcontroladdr}
 		;;
 	virt)
 		# UART at 0x9000000

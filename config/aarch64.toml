@@ -62,7 +62,7 @@ extrautils = {}
 #hematite = {}
 #init = {}
 # installer = {}
-# ion = {}
+ion = {}
 ipcd = {}
 #jansson = {}
 #keyboard-sfx = {}
@@ -174,12 +174,10 @@ uid = 0
 gid = 0
 name = "root"
 home = "/root"
-shell = "/bin/dash"
 
 [users.user]
 # Password is unset
 password = ""
-shell = "/bin/dash"
 
 [[files]]
 path = "/etc/init.d/00_base"

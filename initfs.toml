@@ -7,7 +7,6 @@ prompt = false
 
 # Package settings
 [packages]
-drivers = {}
 init = {}
 nulld = {}
 #pciids = {}
@@ -15,6 +14,9 @@ ramfs = {}
 randd = {}
 redoxfs = {}
 zerod = {}
+
+[target.'cfg(target_arch = "x86_64")'.dependencies]
+drivers = {}
 
 [[files]]
 path="/etc/init.rc"

@@ -152,3 +152,24 @@ qemu_extra: build/extra.bin
 qemu_nvme_extra: build/extra.bin
 	$(QEMU) $(QEMUFLAGS) \
 		-drive file=build/extra.bin,format=raw,if=none,id=drv1 -device nvme,drive=drv1,serial=NVME_EXTRA
+
+qemu_aarch64_virt: build/u-boot.bin build/kernel.uimage
+	$(QEMU) $(QEMU_AARCH64_VIRT_FLAGS) \
+		-bios $<
+
+# Needed so build/u-boot.bin doesn't pass along ARCH to the sub-make. If ARCH is set that breaks the u-boot build.
+MAKEOVERRIDES :=
+
+QEMU_AARCH64_VIRT_FLAGS := -M virt -cpu cortex-a57 -m 2048 -nographic -device loader,file=build/kernel.uimage,addr=0x41000000,force-raw=on
+
+build/u-boot.bin: bootloader-uboot
+	$(MAKE) CROSS_COMPILE=aarch64-linux-gnu- -C $< clean
+	$(MAKE) CROSS_COMPILE=aarch64-linux-gnu- -C $< qemu_arm64_defconfig
+	sed -i 's/^CONFIG_BOOTCOMMAND.*$$/CONFIG_BOOTCOMMAND="bootm 41000000 - $${fdtcontroladdr}"/g' $</.config
+	sed -i 's/^CONFIG_BOOTDELAY.*$$/CONFIG_BOOTDELAY=0/g' $</.config
+	$(MAKE) CROSS_COMPILE=aarch64-linux-gnu- -C $< -j `$(NPROC)`
+	mkdir -p build
+	cp $</u-boot.bin $@
+
+build/kernel.uimage: build/kernel
+	mkimage -A arm64 -O linux -T kernel -C none -a 0x40000000 -e 0x40001000 -n 'Redox kernel (qemu AArch64 virt)' -d $< $@

@@ -33,3 +33,7 @@
 	path = kernel
 	url = https://gitlab.redox-os.org/redox-os/kernel
 	branch = aarch64-revival
+[submodule "rust"]
+	path = rust
+	url = https://gitlab.redox-os.org/redox-os/rust
+	branch = aarch64-revival

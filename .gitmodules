@@ -33,3 +33,7 @@
 	path = bootloader
 	url = https://gitlab.redox-os.org/redox-os/bootloader
 	branch = aarch64-revival
+[submodule "kernel"]
+	path = kernel
+	url = https://gitlab.redox-os.org/redox-os/kernel
+	branch = aarch64-revival

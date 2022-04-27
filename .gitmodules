@@ -33,3 +33,7 @@
 	path = rust
 	url = https://gitlab.redox-os.org/redox-os/rust
 	branch = aarch64-revival
+[submodule "relibc"]
+	path = relibc
+	url = https://gitlab.redox-os.org/redox-os/relibc
+	branch = aarch64-revival
